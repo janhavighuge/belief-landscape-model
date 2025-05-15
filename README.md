@@ -1,125 +1,113 @@
-# belief-landscape-model
+# NLP Pipeline for Misinformation Detection & Behavioral Risk Analysis on Reddit (r/climate)
 
-🎯 Objective
-To understand how misinformation, sentiment, and belief dynamics spread across Reddit — specifically within the climate discourse — using scalable Natural Language Processing and Machine Learning techniques. The ultimate goal was to detect misinformation patterns, topic polarization, and behavioral risk signals in real-time.
+**Graduate Research Project | The SOURCE, Syracuse University**  
+*September 2022 – June 2023*
 
-🔁 Project Overview
-“We developed an end-to-end NLP pipeline that ingested 1M+ Reddit posts, processed and enriched text data, applied machine learning models for topic/sentiment analysis, detected behavioral risk markers, and visualized shifts in user intent — all deployed via a Flask web app on GCP.”
+---
 
-🧱 Pipeline Architecture
-1. Data Collection
-Used Pushshift API to scrape over 1M Reddit posts from r/climate and related subreddits.
+## Project Overview
 
-Collected post body, title, timestamp, author, flair, upvotes, and comment count.
+This project developed an end-to-end Natural Language Processing (NLP) and Machine Learning (ML) pipeline to analyze over **1 million Reddit posts** from the r/climate subreddit. The goal was to detect misinformation patterns, classify user intent, analyze sentiment trends, and identify behavioral risk signals associated with belief dynamics and misinformation spread.
 
-2. Preprocessing
-Tokenization, URL/email removal, punctuation stripping.
+The pipeline includes data collection, preprocessing, feature engineering, topic modeling, sentiment analysis, behavioral risk detection, and deployment of a Flask web app on Google Cloud Platform for real-time monitoring.
 
-Emoji conversion using emoji and demojize to retain emotional context.
+---
 
-Preserved capitalization and used it as a feature, rather than lowercasing (since uppercase often reflects emotional intensity).
+## Objectives
 
-Removed stopwords but retained domain-relevant words (e.g., “climate,” “CO2”).
+- Understand and classify topical themes and user intent within climate discussions
+- Detect misinformation and behavioral risk markers such as hostility, conspiratorial language, and distress
+- Improve sentiment analysis accuracy on social media text
+- Deploy an automated, scalable pipeline for near real-time data processing and visualization
 
-3. Feature Engineering
-TF-IDF for sparse keyword features.
+---
 
-Word2Vec and GloVe embeddings to capture semantic context.
+## Pipeline Architecture
 
-Incorporated metadata features: post length, caps ratio, time of post, flair.
+### 1. Data Collection
+- Scraped 1M+ posts using the Pushshift API from r/climate and related subreddits
+- Extracted post text, metadata (author, timestamp, flair), and engagement metrics
 
-Extracted emotions using NRC Emotion Lexicon and VADER for sentiment.
+### 2. Preprocessing
+- Cleaned text by removing URLs, emails, and punctuation
+- Tokenized posts and converted emojis to text (using `emoji.demojize`) to retain emotional content
+- Preserved capitalization to capture emotional emphasis as a feature
+- Removed stopwords, while retaining domain-specific terms
 
-🔍 4A. Topic Modeling & Intent Segmentation
-“We wanted to understand what people were talking about — activism, skepticism, scientific debate, or denial — and how those topics evolved over time.”
+### 3. Feature Engineering
+- TF-IDF vectors and Word2Vec embeddings to capture lexical and semantic information
+- Metadata features such as post length, capitalization ratio, and posting time
+- Emotion and sentiment features using NRC Emotion Lexicon and VADER sentiment analyzer
 
-Used BERTopic for unsupervised topic modeling.
+### 4. Topic Modeling & Intent Segmentation
+- Applied BERTopic for unsupervised topic discovery, identifying 30+ meaningful topics such as Climate Denialism, Activism, and Policy Debate
+- Used weak supervision (keyword rules, subreddit flairs) to label macro user intents like Activism, Denial, and Supportive
 
-Cleaned output using reclustering, topic merging, and manual labeling.
+### 5. Sentiment Analysis
+- Enhanced VADER baseline with a custom LSTM + GloVe embedding model
+- Improved sentiment classification accuracy by 15% on 100K+ Reddit posts
+- Visualized sentiment trends alongside topical shifts over time
 
-Labeled 30+ topics such as:
+### 6. Behavioral Risk Signal Detection
+- Defined behavioral risk categories: Hostility, Hopelessness, Conspiratorial, Crisis, Call to Action
+- Used weak supervision (keywords, punctuation, caps usage) to label risk signals
+- Trained logistic regression and random forest classifiers achieving ~78% F1 score
+- Clustered risky behaviors using UMAP and KMeans to identify belief escalation hotspots
 
-Climate Denialism
+### 7. Deployment
+- Built a Flask web app deployed on Google Cloud Platform
+- Automated data ingestion and prediction pipelines processing 400K+ posts daily
+- Enabled researchers to monitor real-time belief dynamics, risk signals, and misinformation trends
 
-Policy and Regulation Debates
+---
 
-Activism and Protests
+## Results & Impact
 
-Tech Solutions (EVs, Solar, etc.)
+- Improved sentiment analysis accuracy by **15%** on social media data  
+- Achieved **85% accuracy** in user intent segmentation  
+- Detected early warning signals for misinformation and belief polarization  
+- Provided scalable, real-time monitoring capability for research teams  
 
-Climate Anxiety
+---
 
-🔖 Weak Supervision for Intent
-Labeled topics into macro-intents like Activism, Denial, Debate, Supportive, using:
+## Technologies & Tools
 
-Keywords (e.g., “hoax”, “march”, “fossil fuel”)
+| Category           | Tools & Libraries                                  |
+|--------------------|---------------------------------------------------|
+| Programming        | Python, Flask, HTML/CSS                            |
+| Data Collection    | Pushshift API                                     |
+| NLP & ML           | Scikit-learn, BERTopic, TensorFlow, Gensim, NLTK, VADER, UMAP, HDBSCAN |
+| Visualization      | Matplotlib, Seaborn, Plotly                        |
+| Deployment         | Google Cloud Platform (App Engine, Cloud Storage) |
 
-Subreddit flairs (if available)
+---
 
-Sentence context
+## How to Use
 
-💬 4B. Sentiment Analysis
-Used VADER for rule-based sentiment scoring.
+1. Clone the repository  
+2. Install dependencies from `requirements.txt`  
+3. Run data ingestion scripts to collect Reddit posts  
+4. Execute preprocessing and feature engineering modules  
+5. Train or load pretrained topic, sentiment, and risk detection models  
+6. Launch the Flask app locally or deploy on GCP for real-time monitoring
 
-Applied custom LSTM + GloVe to improve sentiment classification accuracy by 15%.
+---
 
-Fine-tuned on 100K manually reviewed Reddit posts using scikit-learn + TensorFlow.
+## Future Work
 
-Visualized sentiment trends over time with topic overlays.
+- Incorporate transformer-based models (e.g., BERT) for improved context understanding  
+- Expand behavioral risk detection with multimodal data (images, videos)  
+- Develop dashboards for stakeholder-friendly visualization and alerts  
 
-🧠 5. Behavioral Risk Signal Detection
-“We engineered behavioral features to catch when users shifted from skepticism to hostility or hopelessness — markers of belief escalation or distress.”
+---
 
-Defined risk categories: Hostility, Hopelessness, Conspiratorial, Crisis, Activism.
+## Contact
 
-Used weak supervision: keywords, caps usage, sentence structure, flairs.
+*For questions or collaboration inquiries:*  
+**Janhavi S. Ghuge**  
+[LinkedIn](https://www.linkedin.com/in/janhavighuge) | [GitHub](https://github.com/janhavighuge)  
 
-Features included:
+---
 
-Caps ratio, punctuation stress (!!!)
-
-Emotion scores (anger, fear, sadness)
-
-Post timing (e.g., late night posting spikes)
-
-Trained Logistic Regression and Random Forests with class-balancing for multi-class classification.
-
-Achieved ~78% F1 score on risky vs non-risky content.
-
-🧠 Risk Clustering:
-Embedded posts via UMAP and Word2Vec, clustered via KMeans + HDBSCAN.
-
-Identified “hot spots” of escalating conspiratorial sentiment or radical call-to-actions.
-
-🚀 6. Deployment
-“To make this useful for ongoing monitoring, we operationalized it via a live web app.”
-
-Built a Flask web app to serve predictions and risk visuals.
-
-Deployed on Google Cloud Platform using App Engine and Cloud Storage.
-
-Automated ingestion + scoring pipeline handling 400K+ posts/day.
-
-Enabled researchers to:
-
-Query recent risk signals
-
-Monitor trending topics
-
-Track belief shifts in near real-time
-
-📈 Impact
-✅ Improved sentiment classification accuracy by 15%
-✅ Segmented user intents with 85% clustering accuracy
-✅ Detected early warning signs of belief polarization and misinformation spread
-✅ Enabled real-time insights into community shifts and behavioral risk dynamics
-✅ Positioned the platform for future integration with misinformation response teams
-
-🧰 Tech Stack
-Category	Tools Used
-Languages	Python, HTML/CSS (Flask app)
-Libraries	Scikit-learn, BERTopic, TensorFlow, NLTK, VADER, Gensim, UMAP, HDBSCAN
-Deployment	Flask, Google Cloud Platform (App Engine, Cloud Storage)
-Data Ingestion	Pushshift API
-Visualization	Matplotlib, Seaborn, Plotly
+*This project was completed as part of graduate research at Syracuse University’s The SOURCE lab.*
 
