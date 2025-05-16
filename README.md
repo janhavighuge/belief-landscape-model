@@ -22,43 +22,54 @@ The pipeline includes data collection, preprocessing, feature engineering, topic
 
 ---
 
-## Pipeline Architecture
+🔁 End-to-End Project Flow: Reddit NLP Pipeline (r/climate)
+📥 Data Collection
 
-### 1. Data Collection
-- Scraped 1M+ posts using the Pushshift API from r/climate and related subreddits
-- Extracted post text, metadata (author, timestamp, flair), and engagement metrics
+Scraped 1M+ posts from r/climate using Pushshift API
 
-### 2. Preprocessing
-- Cleaned text by removing URLs, emails, and punctuation
-- Tokenized posts and converted emojis to text (using `emoji.demojize`) to retain emotional content
-- Preserved capitalization to capture emotional emphasis as a feature
-- Removed stopwords, while retaining domain-specific terms
+Captured post content, metadata, and engagement signals (e.g., score, comments)
 
-### 3. Feature Engineering
-- TF-IDF vectors and Word2Vec embeddings to capture lexical and semantic information
-- Metadata features such as post length, capitalization ratio, and posting time
-- Emotion and sentiment features using NRC Emotion Lexicon and VADER sentiment analyzer
+🧹 Preprocessing
 
-### 4. Topic Modeling & Intent Segmentation
-- Applied BERTopic for unsupervised topic discovery, identifying 30+ meaningful topics such as Climate Denialism, Activism, and Policy Debate
-- Used weak supervision (keyword rules, subreddit flairs) to label macro user intents like Activism, Denial, and Supportive
+Cleaned and tokenized text (retained case + demojized emojis)
 
-### 5. Sentiment Analysis
-- Enhanced VADER baseline with a custom LSTM + GloVe embedding model
-- Improved sentiment classification accuracy by 15% on 100K+ Reddit posts
-- Visualized sentiment trends alongside topical shifts over time
+Removed noise: URLs, special characters, common stopwords
 
-### 6. Behavioral Risk Signal Detection
-- Defined behavioral risk categories: Hostility, Hopelessness, Conspiratorial, Crisis, Call to Action
-- Used weak supervision (keywords, punctuation, caps usage) to label risk signals
-- Trained logistic regression and random forest classifiers achieving ~78% F1 score
-- Clustered risky behaviors using UMAP and KMeans to identify belief escalation hotspots
+Preserved features like capitalization, emoji sentiment, and post timing
 
-### 7. Deployment
-- Built a Flask web app deployed on Google Cloud Platform
-- Automated data ingestion and prediction pipelines processing 400K+ posts daily
-- Enabled researchers to monitor real-time belief dynamics, risk signals, and misinformation trends
+📊 Feature Engineering
 
+Extracted TF-IDF vectors and Word2Vec embeddings
+
+Added metadata-based features (e.g., post length, flair, caps ratio)
+
+Created custom emotion/sentiment scores using VADER and NRC lexicon
+
+🧠 Topic Modeling + User Intent Segmentation
+
+Used BERTopic and weak supervision (keywords, flairs)
+
+Tuned K-Means, DBSCAN, and Hierarchical clustering
+
+Achieved 85% accuracy in labeling posts into segments like activism, denial, policy
+
+📈 Sentiment Analysis (Enhanced)
+
+Combined VADER with custom LSTM + GloVe model
+
+Improved classification accuracy by 15% on 100K manually tagged posts
+
+⚠️ Behavioral Risk Signal Detection
+
+Labeled posts with weak supervision into risk categories (e.g., hostility, hopelessness)
+
+Trained classifiers (Random Forest, Logistic Regression) on these tags
+
+🚀 Deployment
+
+Built and deployed a Flask app on Google Cloud Platform
+
+Automated ingestion + prediction pipelines to handle 400K+ posts/day
 ---
 
 ## Results & Impact
